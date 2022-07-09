@@ -1,6 +1,6 @@
-# Questionnaire App
+# Influencers App
 
-App built with: React(CRA), Redux, Typescript and Styled Components
+App built with: React(CRA), Redux, Typescript and Tailwind CSS
 
 Instructions: 
 
