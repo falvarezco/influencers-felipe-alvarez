@@ -1,14 +1,72 @@
-import React, { FC, ReactNode } from 'react';
+import React, { FC, useState, ReactNode, ReactPortal, ReactElement, useEffect } from 'react';
+import { createPortal } from 'react-dom';
+import { NavLink } from 'react-router-dom';
+import SvgIcon from '../SvgIcon';
 
-interface NavigationProps {
+const CONTAINER_CLASSES = 'flex p-3 items-center border-solid border-b-2 border-sky-500';
+const DESKTOP_LIST_CLASSES = 'hidden flex-1 justify-end md:flex items-center gap-5';
+const MOBILE_LIST_CLASSES = 'flex flex-col items-left gap-5 py-10 px-5';
+const MOBILE_LIST_ITEM_CLASSES = 'pt-2 font-semibold';
+const MOBILE_NAV_BTN = 'flex flex-1 items-center justify-end md:hidden';
+const MOBILE_NAV_CONTAINER = 'flex absolute flex-col bg-slate-200 w-full h-full top-0';
+
+interface MobileNavProps {
   children: ReactNode,
 }
 
-const Navigation: FC<NavigationProps> = ({children}) => {
-  return (
-    <div>
+const MobileNav: FC<MobileNavProps> = ({children}) => {
+  const root = document.getElementById('root') as HTMLElement;
+  return createPortal(
+    <div 
+      data-testid='mobile-nav' 
+      className={MOBILE_NAV_CONTAINER}>
       {children}
     </div>
+  , root);
+};
+
+const Navigation: FC = () => {
+  const [mobileMenuOpen, toggleMenu] = useState(false);
+  const toggleMobileNav = () => toggleMenu(!mobileMenuOpen);
+  return (
+    <nav className={CONTAINER_CLASSES}>
+      <figure className='flex-none'>
+        <SvgIcon name='logo'/>
+      </figure>
+      <ul className={DESKTOP_LIST_CLASSES}>
+        <li>Dashboard</li>
+        <li>
+          <NavLink to='/'>Influencer List</NavLink>
+        </li>
+        <li>
+          <SvgIcon name='user' size='32' />
+        </li>
+      </ul>
+      <figure className={MOBILE_NAV_BTN}>
+        <SvgIcon name='menu' size='32' onClick={toggleMobileNav}/>
+      </figure>
+      {mobileMenuOpen &&
+        <MobileNav>
+          <header className='flex p-3'>
+            <figure className='flex-none'>
+              <SvgIcon name='logo'/>
+            </figure>
+            <figure className={MOBILE_NAV_BTN}>
+              <SvgIcon name='close' size='32' onClick={toggleMobileNav}/>
+            </figure>
+          </header>
+          <ul className={MOBILE_LIST_CLASSES}>
+            <li className={MOBILE_LIST_ITEM_CLASSES}>Dashboard</li>
+            <li className={MOBILE_LIST_ITEM_CLASSES}>
+              <NavLink to='/'>Influencer List</NavLink>
+            </li>
+            <li className={MOBILE_LIST_ITEM_CLASSES}>
+              My Account
+            </li>
+          </ul>
+        </MobileNav>
+      }
+    </nav>
   )
 }
 
