@@ -1,5 +1,6 @@
 export interface InitialState {
   isLoading: boolean,
+  searchValue: string,
   currentPage: number,
   users: UserData[],
 }

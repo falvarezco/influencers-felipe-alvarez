@@ -2,7 +2,6 @@ import React, { FC, useState, ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { NavLink } from 'react-router-dom';
 import SvgIcon from '../SvgIcon';
-import Button from '../Button';
 
 const CONTAINER_CLASSES = 'flex p-3 items-center bg-cgrey-100 border-solid border-b-2 border-blueGrey';
 const DESKTOP_LIST_CLASSES = 'hidden flex-1 justify-end md:flex items-center gap-10';

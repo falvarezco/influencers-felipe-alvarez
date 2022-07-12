@@ -19,6 +19,8 @@ const UsersGrid: FC<UsersGridProps> = ({
 }) => {
   const pageIdx = currentPage - 1;
   const hasData = !isEmpty(users) && !isLoading;
+  const dataLoading = isEmpty(users) && isLoading;
+  const noResults = isEmpty(users) && !isLoading;
   const numberOfPages = Object.values(users).length;
   const pageLinks = new Array(numberOfPages).fill('');
 
@@ -44,21 +46,24 @@ const UsersGrid: FC<UsersGridProps> = ({
         {hasData && users[pageIdx].map(
           (user: UserData) => <GridCard key={user.uuid} {...user}/>
         )}
-        {isEmpty(users) && isLoading && <h2>Loading data...</h2>}
+      {dataLoading && <h2>Loading data...</h2>}
+      {noResults && <h2>No data...</h2>}
       </section>
-      <footer className='flex w-full gap-6 justify-center'>
-        <button onClick={() => handleSetPage('first')}>{'<<'}</button>
-        <button onClick={() => handleSetPage('prev')}>{'<'}</button>
-        {pageLinks.map((v, idx) => (
-          <Button 
-            onClick={() => setPage(idx + 1)}
-            selectedSecondary={currentPage === idx + 1}>
-            {idx + 1}
-          </Button>
-        ))}
-        <button onClick={() => handleSetPage('next')}>{'>'}</button>
-        <button onClick={() => handleSetPage('last')}>{'>>'}</button>
-      </footer>
+      {hasData && 
+        <footer className='flex w-full gap-6 justify-center'>
+          <button onClick={() => handleSetPage('first')}>{'<<'}</button>
+          <button onClick={() => handleSetPage('prev')}>{'<'}</button>
+          {pageLinks.map((v, idx) => (
+            <Button 
+              onClick={() => setPage(idx + 1)}
+              selectedSecondary={currentPage === idx + 1}>
+              {idx + 1}
+            </Button>
+          ))}
+          <button onClick={() => handleSetPage('next')}>{'>'}</button>
+          <button onClick={() => handleSetPage('last')}>{'>>'}</button>
+        </footer>
+      }
     </>
   )
 }

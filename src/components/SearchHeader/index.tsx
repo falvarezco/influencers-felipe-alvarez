@@ -14,7 +14,7 @@ const SearchHeader: FC<SearchHeaderProps> = ({onChange}) => {
           type="text"
           className="h-10 p-2 rounded-lg bg-cgrey-300 border-2 border-white"
           placeholder='Search for an influencer'
-          onChange={onChange} />
+          onKeyUp={onChange} />
       </form>
     </header>
   )

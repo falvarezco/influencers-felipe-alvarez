@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
-import { fetchUsers, getTableData, setCurrentPage } from '../../store/reducer';
+import { fetchUsers, getDataPages, setCurrentPage, setSearchValue } from '../../store/reducer';
 import { PaginatedData } from '../../types';
 import Layout from '../../components/Layout';
 import UsersGrid from '../../components/UsersGrid';
@@ -14,6 +14,7 @@ interface InfluencersProps {
   isLoading: boolean,
   onLoad: Function,
   setPage: (value: number) => void,
+  setSearch: (value: string) => void,
 }
 
 export class Influencers extends Component<InfluencersProps> {
@@ -21,7 +22,9 @@ export class Influencers extends Component<InfluencersProps> {
     this.props.onLoad();
   }
   onSearchChange = (e: any) => {
-    console.log(e);
+    const {target: {value}} = e;
+    const {setSearch, isLoading} = this.props;
+    !isLoading && setSearch(value);
   }
   render() {
     const {users} = this.props;
@@ -41,13 +44,14 @@ const mapStateToProps = (state: RootState) => {
   return {
     isLoading,
     currentPage,
-    users: getTableData(state),
+    users: getDataPages(state),
   }
 };
 
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
-  onLoad:() => dispatch(fetchUsers()),
-  setPage:(val: number) => dispatch(setCurrentPage(val)),
+  onLoad: () => dispatch(fetchUsers()),
+  setPage: (val: number) => dispatch(setCurrentPage(val)),
+  setSearch: (val: string) => dispatch(setSearchValue(val)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Influencers);

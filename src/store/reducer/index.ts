@@ -13,6 +13,11 @@ interface SetCurrentPage {
   payload: number,
 }
 
+interface SetSearchValue {
+  type: string,
+  payload: string,
+}
+
 // Simulate Api Call
 const apiFetch = new Promise((resolve, reject) => {
   setTimeout(() => {
@@ -21,12 +26,24 @@ const apiFetch = new Promise((resolve, reject) => {
 });
 
 // Selectors
-export const selectState = (state: RootState) => state;
+export const selectUsers = ({usersState}: RootState) => usersState.users;
+export const selectSearch = ({usersState}: RootState) => usersState.searchValue;
 
-export const getTableData = createDraftSafeSelector(
-  selectState, 
-  ({usersState: {users}}: RootState) => {
-    if (isEmpty(users)) return {};
+export const getFilteredData = createDraftSafeSelector(
+  [selectUsers, selectSearch], 
+  (users: UserData[], searchValue: string) => {
+    if (isEmpty(users)) return [];
+
+    return users.filter(({name, description}) => 
+      name.includes(searchValue) || description.includes(searchValue)
+    );
+  }
+);
+
+export const getDataPages = createDraftSafeSelector(
+  [getFilteredData],
+  (users: UserData[]) => {
+    if (isEmpty(users)) return [];
 
     const userPages: PaginatedData = {};
     const pageSize = 10;
@@ -36,14 +53,15 @@ export const getTableData = createDraftSafeSelector(
       const start = i * pageSize;
       const end = (i + 1) * pageSize;
       for (let j = start; j < end; j++) {
-        page.push(users[j]);
+        users[j] && page.push(users[j]);
       }
       userPages[i] = page;
     }
 
     return userPages;
   }
-);
+)
+
 
 // Action Creators
 export const fetchUsers = createAsyncThunk(
@@ -53,6 +71,7 @@ export const fetchUsers = createAsyncThunk(
 
 export const initialState: InitialState  = {
   isLoading: false,
+  searchValue: '',
   currentPage: 1,
   users: [],
 }
@@ -64,6 +83,10 @@ const usersSlice = createSlice({
   reducers: {
     setCurrentPage: (state: any, {payload}: SetCurrentPage) => {
       state.currentPage = payload;
+    },
+    setSearchValue: (state: any, {payload}: SetSearchValue) => {
+      state.currentPage = 1;
+      state.searchValue = payload;
     }
   },
   extraReducers: (builder) => {
@@ -81,5 +104,5 @@ const usersSlice = createSlice({
   },
 });
 
-export const { setCurrentPage } = usersSlice.actions;
+export const { setCurrentPage, setSearchValue } = usersSlice.actions;
 export default usersSlice.reducer;
