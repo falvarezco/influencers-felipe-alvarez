@@ -1,14 +1,15 @@
-import React, { FC, useState, ReactNode, ReactPortal, ReactElement, useEffect } from 'react';
+import React, { FC, useState, ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { NavLink } from 'react-router-dom';
 import SvgIcon from '../SvgIcon';
+import Button from '../Button';
 
-const CONTAINER_CLASSES = 'flex p-3 items-center border-solid border-b-2 border-sky-500';
-const DESKTOP_LIST_CLASSES = 'hidden flex-1 justify-end md:flex items-center gap-5';
+const CONTAINER_CLASSES = 'flex p-3 items-center bg-cgrey-100 border-solid border-b-2 border-blueGrey';
+const DESKTOP_LIST_CLASSES = 'hidden flex-1 justify-end md:flex items-center gap-10';
 const MOBILE_LIST_CLASSES = 'flex flex-col items-left gap-5 py-10 px-5';
 const MOBILE_LIST_ITEM_CLASSES = 'pt-2 font-semibold';
 const MOBILE_NAV_BTN = 'flex flex-1 items-center justify-end md:hidden';
-const MOBILE_NAV_CONTAINER = 'flex absolute flex-col bg-slate-200 w-full h-full top-0';
+const MOBILE_NAV_CONTAINER = 'flex absolute flex-col bg-cgrey-100 w-full h-full top-0';
 
 interface MobileNavProps {
   children: ReactNode,
@@ -35,7 +36,7 @@ const Navigation: FC = () => {
       </figure>
       <ul className={DESKTOP_LIST_CLASSES}>
         <li>Dashboard</li>
-        <li>
+        <li className='bg-cgrey-300 p-3 rounded-xl'>
           <NavLink to='/'>Influencer List</NavLink>
         </li>
         <li>

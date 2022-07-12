@@ -6,7 +6,7 @@ interface LayoutProps {
 
 const Layout: FC<LayoutProps> = ({children}) => {
   return (
-    <div className="flex">
+    <div className='flex p-5 flex-col h-full'>
       {children}
     </div>
   )
