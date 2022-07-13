@@ -19,7 +19,7 @@ describe('Influencers Page Component', () => {
   test('Should display children elements properly', () => {
     render(component);
     expect(screen.getByRole('banner')).toBeInTheDocument();
-    expect(screen.getByText(/No data.../i)).toBeInTheDocument();
+    expect(screen.getByText(/No Users Found...Try Another Search!/i)).toBeInTheDocument();
   });
   
   test('Should call given method props successfully', () => {

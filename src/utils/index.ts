@@ -22,6 +22,9 @@ export const getDataByPages = (users: UserData[]) => {
   return userPages;
 }
 
+
+export const formatSocialsHandle = (value: string) => `@${value}`;
+
 // Pagination generated for testing purposes
 export const getPaginatedMock = () => getDataByPages(jsonData.influencers);
 

@@ -15,11 +15,11 @@ describe('SearchHeader Component', () => {
     const value = 'hello';
     // eslint-disable-next-line testing-library/no-unnecessary-act
     act(() => {
-      userEvent.type(screen.getByTestId('search-field'), value);
+      userEvent.type(screen.getByTestId('desktop-search-field'), value);
     });
 
     expect(screen.getByText(/Influencers/i)).toBeInTheDocument();
-    expect(screen.getByTestId('search-field')).toHaveValue(value);
+    expect(screen.getByTestId('desktop-search-field')).toHaveValue(value);
     expect(change).toHaveBeenCalled();  
   });
 });

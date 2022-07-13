@@ -8,6 +8,7 @@ export interface InitialState {
 export interface Channel {
   handle: string,
   platform: string,
+  isActive?: boolean,
 }
 
 export interface UserData {

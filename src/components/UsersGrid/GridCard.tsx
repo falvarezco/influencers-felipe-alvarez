@@ -39,12 +39,12 @@ const GridCard: FC<GridCardProps> = ({
       </div>
       <div className='flex flex-1 flex-col gap-3'>
         <h2 className='text-3xl md:text-5xl'>{name}</h2>
-        <div className='hidden md:flex gap-4'>
+        <div className='hidden md:flex gap-8'>
           <Platforms platforms={channels} />
         </div>
       </div>
     </div>
-    <div className='flex md:hidden gap-4'>
+    <div className='flex md:hidden gap-8'>
       <Platforms platforms={channels} isMobile />
     </div>
     <div className='flex gap-5'>

@@ -18,7 +18,7 @@ describe('Users Grid Component', () => {
 
   test('Should empty message when expected', () => {
     render(component);
-    expect(screen.getByText(/No data.../i)).toBeInTheDocument();
+    expect(screen.getByText(/No Users Found...Try Another Search!/i)).toBeInTheDocument();
   });
 
   test('Should show loading message when expected', () => {
@@ -27,7 +27,8 @@ describe('Users Grid Component', () => {
       isLoading: true,
     }
     render(<UseGrid {...newProps} />);
-    expect(screen.getByText(/Loading data.../i)).toBeInTheDocument();
+
+    expect(screen.getByTestId('loading-indicator')).toBeInTheDocument();
   });
 
   describe('Users Grid with Data', () => {

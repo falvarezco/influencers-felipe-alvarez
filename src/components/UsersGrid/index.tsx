@@ -4,6 +4,7 @@ import { PaginatedData, UserData } from '../../types';
 import GridCard from './GridCard';
 import Button from '../Button';
 import SvgIcon from '../SvgIcon';
+import LoadingIcon from '../LoadingIcon';
 
 export interface UsersGridProps {
   users: PaginatedData,
@@ -49,8 +50,16 @@ const UsersGrid: FC<UsersGridProps> = ({
         {hasData && users[pageIdx].map(
           (user: UserData) => <GridCard key={user.name} {...user}/>
         )}
-      {dataLoading && <h2>Loading data...</h2>}
-      {noResults && <h2>No data...</h2>}
+        {dataLoading && 
+          <div data-testid='loading-indicator' className='col-span-4 flex justify-center'>
+            <LoadingIcon />
+          </div>
+        }
+        {noResults && 
+          <div className='col-span-4 p-5 rounded-2xl bg-cgrey-300'>
+            <h2 className='text-center text-xl'>No Users Found...Try Another Search!</h2>
+          </div>
+        }
       </section>
       {hasData && 
         <footer

@@ -1,5 +1,10 @@
 // import { render, screen } from '@testing-library/react';
-import { getDataByPages, intToString, getByFilteredStr } from '.';
+import {
+  getDataByPages,
+  intToString,
+  getByFilteredStr,
+  formatSocialsHandle,
+} from '.';
 import jsonData from '../mockData/data.json';
 
 describe('Utils Methods', () => {
@@ -19,5 +24,9 @@ describe('Utils Methods', () => {
     expect(getByFilteredStr(jsonData.influencers, 'Nikolaus')).toHaveLength(1);
     // By Description
     expect(getByFilteredStr(jsonData.influencers, 'Sit ipsa quia dolor dignissimos id porro.')).toHaveLength(1);
+  });
+
+  test('Should format string to show social media name', () => {
+    expect(formatSocialsHandle('Bob')).toBe('@Bob');
   });
 });
