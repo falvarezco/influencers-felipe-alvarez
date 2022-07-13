@@ -14,9 +14,9 @@ const Button: FC<ButtonProps> = ({
   selectedSecondary,
 }) => {
   const classes = `
-    w-[56px] h-[48px] ${selectedPrimary ? 'bg-cgrey-300' : 'bg-none'}
+    w-[56px] h-[48px] hover:bg-cgrey-300 rounded-xl
+    ${selectedPrimary ? 'bg-cgrey-300' : 'bg-none'}
     ${selectedSecondary ? 'bg-blueGreyLight border-2 border-blueGrey' : 'bg-none'}
-    hover:bg-cgrey-300 rounded-xl
   `;
   return (
     <button className={classes} onClick={onClick}>

@@ -8,7 +8,7 @@ import UsersGrid from '../../components/UsersGrid';
 import SearchHeader from '../../components/SearchHeader';
 
 
-interface InfluencersProps {
+export interface InfluencersProps {
   users: PaginatedData,
   currentPage: number,
   isLoading: boolean,
@@ -21,8 +21,7 @@ export class Influencers extends Component<InfluencersProps> {
   componentDidMount () {
     this.props.onLoad();
   }
-  onSearchChange = (e: any) => {
-    const {target: {value}} = e;
+  onSearchChange = ({target: {value}}: any) => {
     const {setSearch, isLoading} = this.props;
     !isLoading && setSearch(value);
   }

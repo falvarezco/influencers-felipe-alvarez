@@ -14,10 +14,17 @@ import { ReactComponent as Twitch } from '../../svg/twitch.svg';
 import { ReactComponent as Github } from '../../svg/github.svg';
 import { ReactComponent as Audience } from '../../svg/audience.svg';
 import { ReactComponent as Aligned } from '../../svg/aligned.svg';
+import { ReactComponent as FirstPage } from '../../svg/first-page.svg';
+import { ReactComponent as LastPage } from '../../svg/last-page.svg';
+import { ReactComponent as PrevPage } from '../../svg/prev-page.svg';
+import { ReactComponent as NextPage } from '../../svg/next-page.svg';
+import { ReactComponent as Search } from '../../svg/search.svg';
 
-interface SvgIconProps {
+export interface SvgIconProps {
   name: string,
+  testId?: string,
   size?: string,
+  classes?: string,
   onClick?: MouseEventHandler<HTMLDivElement>,
 };
 
@@ -53,13 +60,29 @@ const getIcon = (name: string) => {
       return <Audience />;
     case 'aligned':
       return <Aligned />;
+    case 'first-page':
+      return <FirstPage />;
+    case 'last-page':
+      return <LastPage />;
+    case 'prev-page':
+      return <PrevPage />;
+    case 'next-page':
+      return <NextPage />;
+    case 'search':
+      return <Search />;
     default:
       return <svg/>;
   }
 }
 
-const SvgIcon: FC<SvgIconProps> = ({ name, size, onClick }) => (
-  <div style={{width: size}} onClick={onClick}>{getIcon(name)}</div>
+const SvgIcon: FC<SvgIconProps> = ({ name, testId, size, onClick, classes }) => (
+  <div
+    data-testid={testId}
+    style={{width: size}}
+    className={classes}
+    onClick={onClick}>
+    {getIcon(name)}
+  </div>
 )
 
 export default SvgIcon;

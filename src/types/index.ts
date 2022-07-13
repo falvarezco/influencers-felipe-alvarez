@@ -11,9 +11,9 @@ export interface Channel {
 }
 
 export interface UserData {
-  audience: string,
+  audience: string | number,
   avatar: string,
-  uuid: string,
+  uuid?: string,
   channels: Channel[],
   description: string,
   location: string,

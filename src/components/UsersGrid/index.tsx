@@ -3,8 +3,9 @@ import { isEmpty } from 'lodash';
 import { PaginatedData, UserData } from '../../types';
 import GridCard from './GridCard';
 import Button from '../Button';
+import SvgIcon from '../SvgIcon';
 
-interface UsersGridProps {
+export interface UsersGridProps {
   users: PaginatedData,
   currentPage: number,
   isLoading: boolean,
@@ -42,26 +43,43 @@ const UsersGrid: FC<UsersGridProps> = ({
 
   return (
     <>
-      <section className='grid grid-cols-1 gap-6 md:grid-cols-4 my-10'>
+      <section
+        data-testid='users-grid' 
+        className='grid grid-cols-1 gap-6 md:grid-cols-4 my-10'>
         {hasData && users[pageIdx].map(
-          (user: UserData) => <GridCard key={user.uuid} {...user}/>
+          (user: UserData) => <GridCard key={user.name} {...user}/>
         )}
       {dataLoading && <h2>Loading data...</h2>}
       {noResults && <h2>No data...</h2>}
       </section>
       {hasData && 
-        <footer className='flex w-full gap-6 justify-center'>
-          <button onClick={() => handleSetPage('first')}>{'<<'}</button>
-          <button onClick={() => handleSetPage('prev')}>{'<'}</button>
+        <footer
+          data-testid='grid-footer'
+          className='flex w-full gap-6 justify-center'>
+          <button 
+            onClick={() => handleSetPage('first')}>
+            <SvgIcon name='first-page' />
+          </button>
+          <button
+            onClick={() => handleSetPage('prev')}>
+            <SvgIcon name='prev-page' />
+          </button>
           {pageLinks.map((v, idx) => (
-            <Button 
+            <Button
+              key={`page-btn-${idx}`}
               onClick={() => setPage(idx + 1)}
               selectedSecondary={currentPage === idx + 1}>
               {idx + 1}
             </Button>
           ))}
-          <button onClick={() => handleSetPage('next')}>{'>'}</button>
-          <button onClick={() => handleSetPage('last')}>{'>>'}</button>
+          <button
+            onClick={() => handleSetPage('next')}>
+            <SvgIcon name='next-page' />
+          </button>
+          <button
+            onClick={() => handleSetPage('last')}>
+            <SvgIcon name='last-page' />
+          </button>
         </footer>
       }
     </>

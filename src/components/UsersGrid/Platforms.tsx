@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { Channel } from '../../types';
 import SvgIcon from '../SvgIcon';
 
-interface PlatformProps {
+export interface PlatformProps {
   platforms: Channel[],
   isMobile?: boolean,
 }
@@ -13,8 +13,8 @@ const Platforms:FC<PlatformProps> = ({platforms, isMobile}) => {
   return (
     <>
       {platforms.map(({platform}) => 
-        <div key={platform} className={container}>
-          <SvgIcon name={platform.toLowerCase()}/>
+        <div data-testid='platforms' key={platform} className={container}>
+          <SvgIcon testId={`${platform}-icon`} name={platform.toLowerCase()}/>
         </div>
       )}
     </>

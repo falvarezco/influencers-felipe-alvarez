@@ -4,9 +4,9 @@ import {
   createDraftSafeSelector,
 } from '@reduxjs/toolkit';
 import { RootState } from '..';
-import { isEmpty } from 'lodash';
 import jsonData from '../../mockData/data.json';
-import { InitialState, UserData, PaginatedData } from '../../types';
+import { InitialState, UserData } from '../../types';
+import { getDataByPages, getByFilteredStr } from '../../utils'; 
 
 interface SetCurrentPage {
   type: string,
@@ -31,37 +31,13 @@ export const selectSearch = ({usersState}: RootState) => usersState.searchValue;
 
 export const getFilteredData = createDraftSafeSelector(
   [selectUsers, selectSearch], 
-  (users: UserData[], searchValue: string) => {
-    if (isEmpty(users)) return [];
-
-    return users.filter(({name, description}) => 
-      name.includes(searchValue) || description.includes(searchValue)
-    );
-  }
+  getByFilteredStr,
 );
 
 export const getDataPages = createDraftSafeSelector(
   [getFilteredData],
-  (users: UserData[]) => {
-    if (isEmpty(users)) return [];
-
-    const userPages: PaginatedData = {};
-    const pageSize = 10;
-
-    for (let i = 0; i < users.length / pageSize; i++) {
-      const page = [];
-      const start = i * pageSize;
-      const end = (i + 1) * pageSize;
-      for (let j = start; j < end; j++) {
-        users[j] && page.push(users[j]);
-      }
-      userPages[i] = page;
-    }
-
-    return userPages;
-  }
+  getDataByPages,
 )
-
 
 // Action Creators
 export const fetchUsers = createAsyncThunk(

@@ -3,12 +3,28 @@ import { createPortal } from 'react-dom';
 import { NavLink } from 'react-router-dom';
 import SvgIcon from '../SvgIcon';
 
-const CONTAINER_CLASSES = 'flex p-3 items-center bg-cgrey-100 border-solid border-b-2 border-blueGrey';
-const DESKTOP_LIST_CLASSES = 'hidden flex-1 justify-end md:flex items-center gap-10';
+const CONTAINER_CLASSES = `
+  fixed flex w-full p-3 items-center bg-cgrey-100 
+  border-b-2 border-blueGrey border-solid z-30
+`;
+
+const DESKTOP_LIST_CLASSES = `
+  hidden flex-1 justify-end md:flex items-center gap-10
+`;
+
+
+const DESKTOP_BTN_CLASSES = `
+  transition bg-cgrey-400 p-3 rounded-xl border-2 cursor-pointer
+  border-cgrey-400 hover:border-2 hover:border-blueGrey
+`;
+
+const MOBILE_NAV_CONTAINER = `
+  flex absolute flex-col bg-cgrey-100 w-full h-full top-0 z-40
+`;
+
 const MOBILE_LIST_CLASSES = 'flex flex-col items-left gap-5 py-10 px-5';
 const MOBILE_LIST_ITEM_CLASSES = 'pt-2 font-semibold';
 const MOBILE_NAV_BTN = 'flex flex-1 items-center justify-end md:hidden';
-const MOBILE_NAV_CONTAINER = 'flex absolute flex-col bg-cgrey-100 w-full h-full top-0';
 
 interface MobileNavProps {
   children: ReactNode,
@@ -35,7 +51,7 @@ const Navigation: FC = () => {
       </figure>
       <ul className={DESKTOP_LIST_CLASSES}>
         <li>Dashboard</li>
-        <li className='bg-cgrey-300 p-3 rounded-xl'>
+        <li className={DESKTOP_BTN_CLASSES}>
           <NavLink to='/'>Influencer List</NavLink>
         </li>
         <li>

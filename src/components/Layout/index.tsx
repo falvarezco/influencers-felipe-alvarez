@@ -4,12 +4,12 @@ interface LayoutProps {
   children: ReactNode,
 }
 
-const Layout: FC<LayoutProps> = ({children}) => {
-  return (
-    <div className='flex p-5 flex-col h-full'>
-      {children}
-    </div>
-  )
-}
+const CONTAINER_CLASSES = 'flex p-5 pt-[78px] flex-col h-full';
+
+const Layout: FC<LayoutProps> = ({children}) => (
+  <div className={CONTAINER_CLASSES}>
+    {children}
+  </div>
+);
 
 export default Layout;
