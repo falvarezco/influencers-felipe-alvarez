@@ -1,6 +1,6 @@
 import { UserData, PaginatedData } from '../types';
 import jsonData from '../mockData/data.json';
-import { isEmpty } from 'lodash';
+import { isEmpty, lowerCase } from 'lodash';
 
 // Return data paginated with 10 items per page
 export const getDataByPages = (users: UserData[]) => {
@@ -24,6 +24,12 @@ export const getDataByPages = (users: UserData[]) => {
 
 
 export const formatSocialsHandle = (value: string) => `@${value}`;
+
+// Scroll to top
+export const scrollTop = () => window.scrollTo({
+  top: 0,
+  behavior: 'smooth',
+});
 
 // Pagination generated for testing purposes
 export const getPaginatedMock = () => getDataByPages(jsonData.influencers);
@@ -58,7 +64,8 @@ export const intToString = (input: string | number) =>  {
 export const getByFilteredStr = (users: UserData[], searchValue: string) => {
   if (isEmpty(users)) return [];
 
-  return users.filter(({name, description}) => 
-    name.includes(searchValue) || description.includes(searchValue)
-  );
+  return users.filter(({name, description}) => (
+    lowerCase(name).includes(lowerCase(searchValue)) ||
+    lowerCase(description).includes(lowerCase(searchValue))
+  ));
 }

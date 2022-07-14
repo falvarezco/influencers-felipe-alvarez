@@ -4,6 +4,7 @@ import {
   intToString,
   getByFilteredStr,
   formatSocialsHandle,
+  scrollTop,
 } from '.';
 import jsonData from '../mockData/data.json';
 
@@ -20,13 +21,27 @@ describe('Utils Methods', () => {
   });
 
   test('Should filter data collections when using getByFilteredStr', () => {
-    // By Name
+    // By Name with Uppercase
     expect(getByFilteredStr(jsonData.influencers, 'Nikolaus')).toHaveLength(1);
-    // By Description
+    // By Name with Lowercase
+    expect(getByFilteredStr(jsonData.influencers, 'nikolaus')).toHaveLength(1);
+    // By Description with Uppercase
     expect(getByFilteredStr(jsonData.influencers, 'Sit ipsa quia dolor dignissimos id porro.')).toHaveLength(1);
+    // By Description with Lowercase
+    expect(getByFilteredStr(jsonData.influencers, 'sit ipsa quia dolor dignissimos id porro.')).toHaveLength(1);
   });
 
   test('Should format string to show social media name', () => {
     expect(formatSocialsHandle('Bob')).toBe('@Bob');
+  });
+
+  test('Should scroll to top when called', () => {
+    window.scrollTo = jest.fn();
+    scrollTop()
+    expect(window.scrollTo).toHaveBeenCalled();
+    expect(window.scrollTo).toHaveBeenCalledWith({
+      top: 0,
+      behavior: 'smooth',
+    });
   });
 });

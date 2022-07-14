@@ -75,6 +75,7 @@ describe('Users Grid Component', () => {
     test('Should handleSetPage logic properly', async () => {
       render(component);
       const lastPage = Object.values(getPaginatedMock()).length;
+      window.scrollTo = jest.fn();
       // eslint-disable-next-line testing-library/no-unnecessary-act
       await act(() => {
         userEvent.click(screen.getByRole('button', {name: 'first-page.svg'}));
@@ -86,6 +87,7 @@ describe('Users Grid Component', () => {
       expect(propsWithData.setPage).toHaveBeenCalledWith(1);
       expect(propsWithData.setPage).toHaveBeenCalledWith(2);
       expect(propsWithData.setPage).toHaveBeenCalledWith(lastPage);
+      expect(window.scrollTo).toHaveBeenCalled();
     })
   });
 });

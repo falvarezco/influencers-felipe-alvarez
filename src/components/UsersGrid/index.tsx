@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { isEmpty } from 'lodash';
 import { PaginatedData, UserData } from '../../types';
+import { scrollTop } from '../../utils';
 import GridCard from './GridCard';
 import Button from '../Button';
 import SvgIcon from '../SvgIcon';
@@ -26,8 +27,14 @@ const UsersGrid: FC<UsersGridProps> = ({
   const numberOfPages = Object.values(users).length;
   const pageLinks = new Array(numberOfPages).fill('');
 
-  const handleSetPage = (goTo: string) => {
-    // TODO: Scroll top 
+  const handleSetPage = (goTo?: string | null, page?: number) => {
+    if (!goTo && page) {
+      scrollTop();
+      return setPage(page);
+    }
+
+    scrollTop();
+
     switch (goTo) {
       case 'first':
         return setPage(1);
@@ -76,7 +83,7 @@ const UsersGrid: FC<UsersGridProps> = ({
           {pageLinks.map((v, idx) => (
             <Button
               key={`page-btn-${idx}`}
-              onClick={() => setPage(idx + 1)}
+              onClick={() => handleSetPage(null, (idx + 1))}
               selectedSecondary={currentPage === idx + 1}>
               {idx + 1}
             </Button>
